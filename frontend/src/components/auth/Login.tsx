@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from './AuthContext';
+import { useAuth } from '../../utils/authUtils';
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({

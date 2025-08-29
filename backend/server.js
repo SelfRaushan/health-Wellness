@@ -41,13 +41,15 @@ app.use('/uploads', express.static('uploads'));
 const userRoutes = require('./routes/users');
 const meditationRoutes = require('./routes/meditations');
 const authRoutes = require('./routes/auth');
+const alarmRoutes = require('./routes/alarms');
 
 // Use routes
 app.use('/api/users', userRoutes);
 app.use('/api/meditations', meditationRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/alarms', alarmRoutes);
 
-// Test route for Day 3
+// Test route for Day 4-5
 app.get('/ping', async (req, res) => {
   const mongoose = require('mongoose');
   
@@ -55,30 +57,26 @@ app.get('/ping', async (req, res) => {
     message: 'pong',
     timestamp: new Date().toISOString(),
     project: 'health-Wellness',
-    status: 'Day 3: Authentication System Ready! 🚀',
-    day: 'Day 3 - Authentication Complete',
+    status: 'Day 4-5: Morning Alarm System Ready! ⏰',
+    day: 'Day 4-5 - Morning Alarm with Puzzle Complete',
     database: {
       status: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected',
       name: mongoose.connection.name || 'health-wellness',
-      collections: ['users', 'meditations', 'exercises', 'calories']
+      collections: ['users', 'meditations', 'exercises', 'calories', 'alarms']
     },
-    authEndpoints: [
-      'POST /api/auth/register - User registration',
-      'POST /api/auth/login - User login',
-      'GET /api/auth/me - Get current user (protected)',
-      'PUT /api/auth/profile - Update profile (protected)'
+    alarmEndpoints: [
+      'POST /api/alarms - Create new alarm',
+      'GET /api/alarms - Get user alarms',
+      'PUT /api/alarms/:id - Update alarm',
+      'DELETE /api/alarms/:id - Delete alarm',
+      'PATCH /api/alarms/:id/toggle - Toggle alarm',
+      'GET /api/alarms/puzzle - Generate puzzle'
     ],
-    dataEndpoints: [
-      'GET /api/users - Get all users',
-      'GET /api/users/stats - User statistics',
-      'GET /api/meditations - Get all meditations',
-      'GET /api/meditations/stats - Meditation statistics'
-    ],
-    nextSteps: ['Day 4-5: Morning Alarm with Puzzle', 'Day 6-7: Meditation Section']
+    nextSteps: ['Day 6-7: Meditation Section', 'Day 8-9: Exercise Section']
   });
 });
 
-// Enhanced API status for Day 3
+// Enhanced API status for Day 4-5
 app.get('/api/status', async (req, res) => {
   const mongoose = require('mongoose');
   
@@ -88,9 +86,9 @@ app.get('/api/status', async (req, res) => {
     
     res.json({
       status: 'active',
-      message: 'Health Wellness API with Authentication Ready',
-      version: '1.0.0',
-      day: 'Day 3 Complete',
+      message: 'Health Wellness API with Alarm System Ready',
+      version: '1.1.0',
+      day: 'Day 4-5 Complete',
       database: {
         connected: mongoose.connection.readyState === 1,
         name: mongoose.connection.name,
@@ -100,6 +98,7 @@ app.get('/api/status', async (req, res) => {
       },
       features: {
         authentication: 'JWT with bcrypt',
+        alarms: 'Smart alarms with puzzle challenges',
         database: 'MongoDB Atlas',
         security: 'Helmet + CORS + Rate Limiting',
         validation: 'Mongoose schemas'
@@ -114,7 +113,14 @@ app.get('/api/status', async (req, res) => {
         users: 'GET /api/users',
         userStats: 'GET /api/users/stats',
         meditations: 'GET /api/meditations',
-        meditationStats: 'GET /api/meditations/stats'
+        meditationStats: 'GET /api/meditations/stats',
+        // Alarms
+        alarms: 'GET /api/alarms',
+        createAlarm: 'POST /api/alarms',
+        updateAlarm: 'PUT /api/alarms/:id',
+        deleteAlarm: 'DELETE /api/alarms/:id',
+        toggleAlarm: 'PATCH /api/alarms/:id/toggle',
+        generatePuzzle: 'GET /api/alarms/puzzle'
       }
     });
   } catch (error) {
@@ -126,17 +132,17 @@ app.get('/api/status', async (req, res) => {
   }
 });
 
-// Health check with authentication status
+// Health check with alarm system status
 app.get('/health', async (req, res) => {
   const mongoose = require('mongoose');
   
   res.status(200).json({
     success: true,
-    message: 'Server is healthy with authentication',
+    message: 'Server is healthy with alarm system',
     uptime: process.uptime(),
     timestamp: new Date().toISOString(),
     database: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected',
-    authSystem: 'Active'
+    alarmSystem: 'Active'
   });
 });
 
@@ -149,7 +155,7 @@ app.use((req, res, next) => {
     availableRoutes: [
       '/ping', '/api/status', '/health',
       '/api/auth/register', '/api/auth/login',
-      '/api/users', '/api/meditations'
+      '/api/users', '/api/meditations', '/api/alarms'
     ]
   });
 });
@@ -168,10 +174,10 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log('🚀 Health-Wellness Backend Server Started');
   console.log(`📱 Server running on port ${PORT}`);
-  console.log(`📅 Day 3: Authentication System Ready!`);
+  console.log(`📅 Day 4-5: Morning Alarm System Ready!`);
   console.log(`🔗 Frontend: ${process.env.FRONTEND_URL || 'http://localhost:5173'}`);
-  console.log('📊 Database: Connected with existing collections');
-  console.log('🔐 Authentication: JWT + bcrypt ready');
+  console.log('📊 Database: Connected with alarm collection');
+  console.log('⏰ Alarm System: Active with puzzle challenges');
 });
 
 module.exports = app;

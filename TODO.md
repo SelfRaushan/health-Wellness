@@ -1,0 +1,6 @@
+- [ ] Analyze requirements
+- [ ] Read AuthContext.tsx to understand the actual export for the auth hook
+- [ ] Read Register.tsx to understand how useAuth is being imported
+- [ ] Modify AuthContext.tsx to export 'useAuth' or modify Register.tsx to import the correct export
+- [ ] Test the fix
+- [ ] Verify results
